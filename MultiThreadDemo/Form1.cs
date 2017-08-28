@@ -18,7 +18,9 @@ using System.Reflection;
 
 using System.Diagnostics;
 
+//Example Code from tutorials at http://csharp-video-tutorials.blogspot.com
 // http://csharp-video-tutorials.blogspot.com/2014/03/part-93-protecting-shared-resources_16.html
+//Venkat @ www.Pragimtech.com
 
 namespace MultiThreadDemo
 {
