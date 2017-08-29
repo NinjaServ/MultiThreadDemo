@@ -18,6 +18,7 @@ using System.Reflection;
 
 using System.Diagnostics;
 
+
 //Example Code from tutorials at http://csharp-video-tutorials.blogspot.com
 // http://csharp-video-tutorials.blogspot.com/2014/03/part-93-protecting-shared-resources_16.html
 //Venkat @ www.Pragimtech.com
@@ -325,6 +326,9 @@ namespace MultiThreadDemo
 
             this.textBox1.Text = "Run Performance Test - In Console";
             Thread_Performance_Test();
+
+            this.textBox1.Text = "Employee Lambda Test - In Console";
+            Employee_Select(); 
         }
 
         private void Thread_Join_IsAlive()
@@ -461,7 +465,7 @@ namespace MultiThreadDemo
         /// </summary>
         public static void Thread_Performance_Test()
         {
-            
+
             Console.WriteLine("Current Processor Count on this system = "
                 + Environment.ProcessorCount);
 
@@ -516,33 +520,72 @@ namespace MultiThreadDemo
 
         #endregion
 
+        //Lambda expressions are particularly helpful for writing LINQ query expressions.
+        //=> is called lambda operator and read as GOES TO.
+        //In most of the cases Lambda expressions supersedes anonymous methods.
+
+        //public static void Odd()
+        //{
+        //    Button1.Click += delegate
+        //    {
+        //        MessageBox.Show("Button Clicked");
+        //    };
+        //    Button1.Click += (eventSender, eventAgrs) =>
+        //    {
+        //        MessageBox.Show("Button Clicked");
+        //    };
+        //}
+
+
+
+        public static void func_delegate()
+        {
+            Func<int, int, string> funcDelegate = (firstNumber, secondNumber) =>
+                "Sum = " + (firstNumber + secondNumber).ToString();
+
+            string result = funcDelegate(10, 20);
+            Console.WriteLine(result);
+        }
+
+
+        public static void Employee_Select()
+        {
+            List<Employee> listEmployees = new List<Employee>() {
+            new Employee{ ID = 101, Name = "Mark"},
+            new Employee{ ID = 102, Name = "John"},
+            new Employee{ ID = 103, Name = "Mary"},
+        };
+
+            // Create a Func delegate
+            Func<Employee, string> selector = employee => "Name = " + employee.Name;
+            // Pass the delegate to the Select() LINQ function
+            IEnumerable<string> names = listEmployees.Select(selector);
+
+            // The above output can be achieved using
+            // lambda expression as shown below
+            // IEnumerable<string> names =
+            // listEmployees.Select(employee => "Name = " + employee.Name);
+
+            foreach (string name in names)
+            {
+                Console.WriteLine(name);
+            }
+
+            Dictionary<int, string> aDict = new Dictionary<int, string> { { 101, "Marky" }, { 102, "Johnny" }, { 103, "Mary" }, { 104, "Lucy" } };
+            names = aDict.Select(element => "Name = " + element.Value);
+            //listEmployees.Select(selector);
+            foreach (string name in names)
+            {
+                Console.WriteLine(name);
+            }
+}
+
+public class Employee
+{
+    public int ID { get; set; }
+    public string Name { get; set; }
+}
+
     }
 }
 
-
-
-//namespace MultiThreadDemo
-//{
-//    public partial class Form1 : Form
-//    {
-//        public Form1()
-//        {
-//            InitializeComponent();
-//        }
-
-//        private void btnTimeConsumingWork_Click(object sender, EventArgs e)
-//        {
-
-//        }
-
-//        private void btnPrintNumbers_Click(object sender, EventArgs e)
-//        {
-
-//        }
-
-//        private void listBoxNumbers_SelectedIndexChanged(object sender, EventArgs e)
-//        {
-
-//        }
-//    }
-//}
